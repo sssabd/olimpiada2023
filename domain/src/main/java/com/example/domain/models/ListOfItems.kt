@@ -1,5 +1,5 @@
 package com.example.domain.models
 
-data class Items(
+data class ListOfItems(
     val items: List<Item>
 )

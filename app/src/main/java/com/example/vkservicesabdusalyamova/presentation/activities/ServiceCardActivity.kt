@@ -6,45 +6,43 @@ import android.graphics.Paint
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.domain.models.Item
 import com.example.vkservicesabdusalyamova.databinding.ActivityServiceCardBinding
 import com.squareup.picasso.Picasso
 
-class ServiceCardActivity : AppCompatActivity() {
+class ServiceCardActivity : AppCompatActivity(), View.OnClickListener {
     private var _binding: ActivityServiceCardBinding? = null
     private val binding: ActivityServiceCardBinding
-        get() = _binding ?: throw RuntimeException("ActivityDetailsAboutTheServiceBinding == null")
+        get() = _binding ?: throw RuntimeException("ActivityServiceCardBinding == null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityServiceCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         parseArgs()
-        clickUrlServiceOnCLickListener()
-        backBtnClickListener()
+
+        binding.tvServiceLink.setOnClickListener(this)
+        binding.btnBack.setOnClickListener(this)
     }
 
-    private fun clickUrlServiceOnCLickListener() {
-        binding.tvServiceLink.setOnClickListener {
-            val url = binding.tvServiceLink.text.toString()
-            if (url.startsWith("http://") || url.startsWith("https://")) {
-                val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intentBrowser)
-            } else {
-                Toast.makeText(
-                    applicationContext,
-                    "Неверный формат URL",
-                    Toast.LENGTH_SHORT)
-                    .show()
+    override fun onClick(button: View?) {
+        when(button) {
+            binding.tvServiceLink -> {
+                val url = binding.tvServiceLink.text.toString()
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+                    val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intentBrowser)
+                } else {
+                    Toast.makeText(applicationContext, "Неверный формат URL", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            binding.btnBack -> {
+                finish()
             }
 
-        }
-    }
-
-    private fun backBtnClickListener() {
-        binding.btnBack.setOnClickListener {
-            finish()
         }
     }
 

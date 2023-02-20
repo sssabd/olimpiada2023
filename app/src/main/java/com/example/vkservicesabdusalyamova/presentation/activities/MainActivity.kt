@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.vkservicesabdusalyamova.presentation.recyclerview.ServiceListAdapter
 import com.example.vkservicesabdusalyamova.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var serviceListAdapter: ServiceListAdapter
 
     private var _binding: ActivityMainBinding? = null
@@ -23,47 +22,50 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupRecycleView()
-        clickServicesListener()
-        clickReplyListener()
+        initRecyclerView()
+
+        servicesOnClickListener()
+        binding.bReply.setOnClickListener(this)
+
         observerLiveDataOfServices()
 
-        loadData()
+        getData()
 
+    }
+
+    override fun onClick(view: View?) {
+        when (view){
+            binding.bReply -> {
+                getData()
+                binding.bReply.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun observerLiveDataOfServices() {
         viewModel.listServicesLiveData.observe(this) {
             if (it!=null) {
                 serviceListAdapter.submitList(it)
-                binding.btnReply.visibility = View.INVISIBLE
+                binding.bReply.visibility = View.INVISIBLE
             } else {
-                Toast.makeText(this, "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
-                with(binding.btnReply) {
+                Toast.makeText(this, "При загрузке данных произошла ошибка",
+                    Toast.LENGTH_SHORT).show()
+                with(binding.bReply) {
                     visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun clickReplyListener() {
-        with(binding.btnReply) {
-            setOnClickListener {
-                loadData()
-            }
-            visibility = View.INVISIBLE
-        }
-    }
-
-    private fun loadData() {
-        viewModel.getListServices()
-    }
-
-    private fun clickServicesListener() {
-        serviceListAdapter.showDetailsAboutTheService = {
+    private fun servicesOnClickListener() {
+        serviceListAdapter.showServiceCard = {
             val intent = ServiceCardActivity.newIntent(this, it)
             startActivity(intent)
         }
+    }
+
+    private fun getData() {
+        viewModel.getListServices()
     }
 
     override fun onDestroy() {
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         _binding = null
     }
 
-    private fun setupRecycleView() {
+    private fun initRecyclerView() {
         serviceListAdapter = ServiceListAdapter()
         binding.rvServices.adapter = serviceListAdapter
     }
