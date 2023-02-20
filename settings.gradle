@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "VkServicesAbdusalyamova"
 include ':app'
+include ':app:data'
+include ':data'
+include ':domain'

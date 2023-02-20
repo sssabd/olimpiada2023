@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VkServicesAbdusalyamova</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="project_vk">Сервисы VK</string>
+    <string name="exampleURL">https://vk.com/</string>
+    <string name="exampleNameService">ВКонтакте</string>
+    <string name="exampleDescriptionService">Самая популярная соцсеть и первое суперприложение в Роcсии</string>
+    <string name="button_reply">button reply</string>
+    <string name="image_service">image service</string>
+    <string name="button_link">Открыть сервис</string>
 </resources>
