@@ -35,7 +35,7 @@
         tools:listitem="@layout/item_service" />
 
     <ImageButton
-        android:id="@+id/btn_reply"
+        android:id="@+id/b_reply"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@android:color/transparent"

@@ -9,9 +9,9 @@ import com.example.vkservicesabdusalyamova.R
 import com.squareup.picasso.Picasso
 
 
-class ServiceListAdapter : ListAdapter<Item, ServiceViewHolder>(ServiceDiffUtilCallback()) {
+class ServiceListAdapter : ListAdapter<Item, ServiceViewHolder>(ServiceComparatorCallback()) {
 
-    var showDetailsAboutTheService: ((item: Item) -> Unit)? = null
+    var showServiceCard: ((item: Item) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -22,13 +22,13 @@ class ServiceListAdapter : ListAdapter<Item, ServiceViewHolder>(ServiceDiffUtilC
         return ServiceViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ServiceViewHolder, position: Int) {
         val service = getItem(position)
-        with(holder) {
+        with(viewHolder) {
             tvNameService.text = service.name
             Picasso.get().load(service.icon_url).into(ivIconService)
             itemServiceLayout.setOnClickListener {
-                showDetailsAboutTheService?.invoke(Item(
+                showServiceCard?.invoke(Item(
                     description = service.description,
                     name = service.name,
                     icon_url = service.icon_url,
@@ -37,6 +37,5 @@ class ServiceListAdapter : ListAdapter<Item, ServiceViewHolder>(ServiceDiffUtilC
             }
         }
     }
-
 
 }
