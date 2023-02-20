@@ -27,7 +27,7 @@ class ServiceListAdapter : ListAdapter<Item, ServiceViewHolder>(ServiceDiffUtilC
         with(holder) {
             tvNameService.text = service.name
             Picasso.get().load(service.icon_url).into(ivIconService)
-            layout.setOnClickListener {
+            itemServiceLayout.setOnClickListener {
                 showDetailsAboutTheService?.invoke(Item(
                     description = service.description,
                     name = service.name,

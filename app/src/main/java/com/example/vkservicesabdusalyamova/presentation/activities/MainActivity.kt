@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         _binding = null
     }
 
-    fun setupRecycleView() {
+    private fun setupRecycleView() {
         serviceListAdapter = ServiceListAdapter()
         binding.rvServices.adapter = serviceListAdapter
     }
